@@ -41,8 +41,9 @@ function renderForm() {
       const activeRender = renderId;
       const nextStream = await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
       if (activeRender !== renderId) { nextStream.getTracks().forEach(track => track.stop()); return; }
-      stopCamera(); stream = nextStream; $('#camera').srcObject = stream; $('#camera').hidden = false; $('#capture').hidden = false; $('#close-camera').hidden = false;
-    } catch(error) { toast(error.name === 'NotAllowedError' ? 'Permiso de cámara denegado. Puedes elegir una imagen.' : 'No se pudo abrir la cámara. Puedes elegir una imagen.'); }
+      stopCamera(); stream = nextStream; const video = $('#camera'); video.srcObject = stream; video.hidden = false; video.muted = true; $('#capture').hidden = false; $('#close-camera').hidden = false;
+      await video.play();
+    } catch(error) { console.warn('Camera unavailable:', error.name, error.message); toast(error.name === 'NotAllowedError' ? 'Permiso de cámara denegado. Puedes elegir una imagen.' : 'No se pudo abrir la cámara. Puedes elegir una imagen.'); }
     finally { if ($('#open-camera')) $('#open-camera').disabled = false; }
   };
   $('#close-camera').onclick = () => { stopCamera(); $('#camera').hidden = true; $('#capture').hidden = true; $('#close-camera').hidden = true; };

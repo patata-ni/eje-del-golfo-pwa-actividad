@@ -27,13 +27,15 @@ test('IndexedDB conserva altas, cambios y consultas después de recargar sin red
   await expect(page.getByRole('heading',{name:'Tu bitácora comienza aquí'})).toBeVisible();
 });
 test('cámara y geolocalización adjuntan evidencia local con permisos simulados',async({page,context})=>{
+  page.on('console',message=>{if(message.type()==='warning'||message.type()==='error')console.log('Browser:',message.text());});
   await context.grantPermissions(['camera','geolocation']);
   await context.setGeolocation({latitude:20.533,longitude:-97.46,accuracy:25});
   await ready(page); await report(page,'Prueba de evidencia');
   await page.getByRole('button',{name:'Obtener ubicación',exact:true}).click();
   await expect(page.locator('#location-status')).toContainText('20.53300');
   await page.getByRole('button',{name:'Abrir cámara',exact:true}).click();
-  await expect.poll(()=>page.locator('video').evaluate(video=>video.videoWidth)).toBeGreaterThan(0);
+  await expect(page.locator('video')).toBeVisible();
+  await expect.poll(()=>page.locator('video').evaluate(video=>video.videoWidth),{timeout:15000}).toBeGreaterThan(0);
   await page.getByRole('button',{name:'Capturar',exact:true}).click();
   await expect(page.getByAltText('Vista previa de la evidencia')).toBeVisible();
   await page.getByRole('button',{name:'Guardar incidencia',exact:true}).click();
