@@ -72,5 +72,6 @@
     </main>
 
     @stack('scripts')
+<a href="{{ asset('pwa/index.html') }}" style="position:fixed;right:18px;bottom:18px;z-index:1000;padding:12px 18px;background:#073d32;color:white;border-radius:10px;font:600 13px system-ui;box-shadow:0 4px 20px #0002">Abrir bitácora PWA ↗</a>
 </body>
 </html>

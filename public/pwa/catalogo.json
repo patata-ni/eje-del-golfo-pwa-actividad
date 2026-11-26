@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "tipo": "Datos de demostración para la actividad académica; no son horarios comerciales.",
+  "rutas": [
+    {"id":"R01","origen":"Poza Rica","destino":"Martínez de la Torre","detalle":"Corredor de referencia del proyecto EJE del Golfo"},
+    {"id":"R02","origen":"Martínez de la Torre","destino":"Poza Rica","detalle":"Recorrido de regreso · referencia académica"}
+  ],
+  "unidades": ["Unidad de práctica 01", "Unidad de práctica 02", "Unidad de práctica 03", "Otra unidad"]
+}
