@@ -33,6 +33,8 @@ Para Laravel: seguir `docs/README-ORIGINAL.md` y `docs/REVISION-Y-CAMBIOS.md`, i
 
 `python scripts/validate-pwa.py` valida PNG, dimensiones, manifiesto y archivos. `node --check` valida los módulos JavaScript. Las pruebas `tests/pwa/bitacora.spec.mjs` verifican guardado y cambios con recarga offline, eliminación, cámara y ubicación simuladas, permisos denegados, escape de HTML, exportación y ancho móvil. Ejecutar `npm ci`, `npx playwright install chromium` y `npx playwright test --config playwright-pwa.config.mjs`. El workflow ejecuta estas pruebas antes de desplegar. Los permisos y la instalación final deben comprobarse también en un teléfono real.
 
+Las pruebas de cámara en CI utilizan un MediaStream sintético generado por canvas y entregado mediante un reemplazo de getUserMedia, porque el servidor de pruebas no tiene cámara física. La captura en canvas, el Blob, el almacenamiento y la recarga se ejercitan realmente. La ubicación usa coordenadas ficticias del navegador de pruebas; no se captura la ubicación personal de las autoras.
+
 ## Prueba manual para exposición
 
 1. Abrir la PWA por HTTPS, esperar el mensaje de disponibilidad offline y visitar Rutas.

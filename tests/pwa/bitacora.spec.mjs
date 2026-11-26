@@ -28,6 +28,18 @@ test('IndexedDB conserva altas, cambios y consultas después de recargar sin red
 });
 test('cámara y geolocalización adjuntan evidencia local con permisos simulados',async({page,context})=>{
   page.on('console',message=>{if(message.type()==='warning'||message.type()==='error')console.log('Browser:',message.text());});
+  // CI has no physical camera. Supply a real synthetic MediaStream through the
+  // same getUserMedia entry point; capture, compression and IndexedDB stay real.
+  await page.addInitScript(()=>{
+    Object.defineProperty(navigator.mediaDevices,'getUserMedia',{value:async()=>{
+      const canvas=document.createElement('canvas');canvas.width=640;canvas.height=480;
+      const ctx=canvas.getContext('2d');
+      const paint=()=>{ctx.fillStyle='#073d32';ctx.fillRect(0,0,640,480);ctx.fillStyle='#fff';ctx.font='24px sans-serif';ctx.fillText('Evidencia de prueba',40,80);};
+      paint();const stream=canvas.captureStream(10);const timer=setInterval(paint,100);
+      stream.getVideoTracks()[0].addEventListener('ended',()=>clearInterval(timer));
+      return stream;
+    }});
+  });
   await context.grantPermissions(['camera','geolocation']);
   await context.setGeolocation({latitude:20.533,longitude:-97.46,accuracy:25});
   await ready(page); await report(page,'Prueba de evidencia');
