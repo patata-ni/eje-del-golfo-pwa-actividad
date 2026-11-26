@@ -51,6 +51,8 @@ test('cámara y geolocalización adjuntan evidencia local con permisos simulados
   await page.getByRole('button',{name:'Capturar',exact:true}).click();
   await expect(page.getByAltText('Vista previa de la evidencia')).toBeVisible();
   await page.getByRole('button',{name:'Guardar incidencia',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Prueba de evidencia',exact:true})).toBeVisible();
+  await expect(page.getByAltText('Evidencia de la incidencia')).toBeVisible();
   await page.reload();
   await expect(page.getByAltText('Evidencia de la incidencia')).toBeVisible();
   await expect(page.locator('#records')).toContainText('20.53300');
