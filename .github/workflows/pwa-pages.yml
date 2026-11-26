@@ -1,0 +1,56 @@
+name: Validar y publicar actividad PWA
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pwa-pages
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Comprobar JavaScript
+        run: |
+          node --check public/pwa/app.js
+          node --check public/pwa/db.js
+          node --check public/pwa/sw.js
+      - name: Validar manifiesto y recursos
+        run: python3 scripts/validate-pwa.py
+      - name: Instalar dependencias para pruebas de navegador
+        run: npm ci
+      - name: Preparar Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Probar IndexedDB, modo offline, cámara, ubicación y móvil
+        run: npx playwright test --config playwright-pwa.config.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pruebas-pwa
+          path: pwa-test-report
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eje-del-golfo-pwa
+          path: public/pwa
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/pwa
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar PWA con HTTPS
+        id: deployment
+        uses: actions/deploy-pages@v4
