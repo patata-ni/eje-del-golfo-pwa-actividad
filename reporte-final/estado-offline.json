@@ -1,0 +1,37 @@
+{
+  "url": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/#incidencias",
+  "online": false,
+  "secureContext": true,
+  "worker": {
+    "scriptURL": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/sw.js",
+    "state": "activated",
+    "scope": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/"
+  },
+  "caches": [
+    "eje-bitacora-actividad-shell-v1",
+    "eje-bitacora-actividad-datos-v1"
+  ],
+  "stores": [
+    "catalogos",
+    "incidencias"
+  ],
+  "incidencias": [
+    {
+      "id": "d9b49193-b4da-4c09-8321-495dbb247d10",
+      "titulo": "Revision de luces - evidencia academica",
+      "descripcion": "Registro ficticio para comprobar persistencia local y consulta offline. No corresponde a una incidencia operativa real.",
+      "unidad": "Unidad de práctica 01",
+      "prioridad": "Normal",
+      "estado": "Pendiente",
+      "creada": "2026-11-27T20:16:15.550Z",
+      "ubicacion": null,
+      "foto": null
+    }
+  ],
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "overflow": false,
+  "capturedAt": "2026-11-27T20:16:15.694Z"
+}

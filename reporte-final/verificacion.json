@@ -1,0 +1,218 @@
+{
+  "pages": 25,
+  "sha256": "80dfd918f6563a55877a26ed144f829ca955900b2a4056140afa2479b925d3eb",
+  "bytes": 481188,
+  "sections": [
+    [
+      "1 Introducción y justificación",
+      "s01"
+    ],
+    [
+      "2 Análisis del caso y requerimientos",
+      "s02"
+    ],
+    [
+      "3 Arquitectura de la solución",
+      "s03"
+    ],
+    [
+      "4 App Shell y renderizado responsivo",
+      "s04"
+    ],
+    [
+      "5 Manifiesto e instalabilidad",
+      "s05"
+    ],
+    [
+      "6 Ciclo de vida del Service Worker",
+      "s06"
+    ],
+    [
+      "7 Estrategias de caché y flujo offline",
+      "s07"
+    ],
+    [
+      "8 Modelo de persistencia en IndexedDB",
+      "s08"
+    ],
+    [
+      "9 Escritura lectura y recuperación de datos",
+      "s09"
+    ],
+    [
+      "10 Integración de la cámara",
+      "s10"
+    ],
+    [
+      "11 Geolocalización notificaciones y permisos",
+      "s11"
+    ],
+    [
+      "12 Configuración versionamiento y despliegue",
+      "s12"
+    ],
+    [
+      "13 Pruebas funcionales y trazabilidad",
+      "s13"
+    ],
+    [
+      "14 Evidencia de operación offline",
+      "s14"
+    ],
+    [
+      "15 Evidencia móvil y estado de almacenamiento",
+      "s15"
+    ],
+    [
+      "16 Auditoría Lighthouse del sitio publicado",
+      "s16"
+    ],
+    [
+      "17 Análisis de métricas y hallazgos",
+      "s17"
+    ],
+    [
+      "18 Seguridad límites y mejoras previstas",
+      "s18"
+    ],
+    [
+      "19 Conclusiones y lecciones aprendidas",
+      "s19"
+    ],
+    [
+      "20 Referencias bibliográficas",
+      "s20"
+    ],
+    [
+      "Anexo A Reproducción y entrega",
+      "anexo"
+    ]
+  ],
+  "pageInfo": [
+    {
+      "page": 1,
+      "chars": 435,
+      "title": "UNIVERSIDAD TECNOLÓGICA DE"
+    },
+    {
+      "page": 2,
+      "chars": 961,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 3,
+      "chars": 296,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 4,
+      "chars": 2107,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 5,
+      "chars": 1991,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 6,
+      "chars": 1577,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 7,
+      "chars": 1203,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 8,
+      "chars": 1806,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 9,
+      "chars": 1755,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 10,
+      "chars": 2008,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 11,
+      "chars": 1623,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 12,
+      "chars": 1871,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 13,
+      "chars": 1764,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 14,
+      "chars": 1904,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 15,
+      "chars": 1601,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 16,
+      "chars": 2146,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 17,
+      "chars": 1196,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 18,
+      "chars": 128,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 19,
+      "chars": 983,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 20,
+      "chars": 1155,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 21,
+      "chars": 2239,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 22,
+      "chars": 1999,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 23,
+      "chars": 2208,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 24,
+      "chars": 1575,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    },
+    {
+      "page": 25,
+      "chars": 1716,
+      "title": "UTGZ  |  Desarrollo y Gestión de Software"
+    }
+  ]
+}
