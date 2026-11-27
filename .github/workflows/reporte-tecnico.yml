@@ -1,0 +1,34 @@
+name: Evidencias para reporte tecnico PWA
+on:
+  push:
+    branches: [evidencias-reporte-pwa]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npx playwright install chromium
+      - name: Pruebas de regresion PWA
+        run: npx playwright test --config playwright-pwa.config.mjs
+      - name: Capturas y persistencia offline en HTTPS
+        run: node scripts/evidencias-reporte.mjs
+      - name: Auditoria Lighthouse del sitio publicado
+        run: |
+          export CHROME_PATH=$(find ~/.cache/ms-playwright -path '*/chrome-linux64/chrome' | head -n 1)
+          npx --yes lighthouse@13 https://patata-ni.github.io/eje-del-golfo-pwa-actividad/ --chrome-flags="--headless --no-sandbox" --output=json --output=html --output-path=./evidencias/lighthouse --only-categories=performance,accessibility,best-practices,seo
+      - name: Captura de resultados Lighthouse
+        run: node scripts/captura-lighthouse.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencias-reporte-pwa
+          path: |
+            evidencias
+            pwa-test-report
