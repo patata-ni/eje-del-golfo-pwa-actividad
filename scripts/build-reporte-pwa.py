@@ -15,6 +15,7 @@ from PIL import Image as PILImage, ImageOps, ImageDraw
 OUT=Path('reporte-final');OUT.mkdir(exist_ok=True)
 E=next(Path('insumos').rglob('resumen-lighthouse.json')).parent
 L=json.loads((E/'resumen-lighthouse.json').read_text())
+FULL=json.loads((E/'lighthouse.report.json').read_text())
 S=json.loads((E/'estado-offline.json').read_text())
 M=json.loads((E/'manifest-verificado.json').read_text())
 print('LIGHTHOUSE_SUMMARY',json.dumps(L,ensure_ascii=True))
@@ -87,7 +88,7 @@ story.append(Paragraph('<b>GRUPO</b><br/>1010 AEI',styles['CoverCenter']))
 story.append(Spacer(1,15));story.append(Paragraph('SEPTIEMBRE A DICIEMBRE DE 2026<br/>Gutiérrez Zamora, Veracruz<br/>27 de noviembre de 2026',styles['CoverCenter']))
 story.append(PageBreak());story.append(Paragraph('Índice de contenido',styles['ReportH1']))
 toc=TableOfContents();toc.levelStyles=[ParagraphStyle(name='TOCReport',fontName='Helvetica',fontSize=9.2,leading=14,textColor=INK,spaceBefore=5,leftIndent=0,firstLineIndent=0)];story.append(toc)
-story.append(Spacer(1,13));P('El índice enlaza con las secciones del documento. Las capturas y métricas corresponden a la revisión técnica del 27 de noviembre de 2026; los datos operativos mostrados son de demostración.')
+# El índice permanece en una sola página y conserva enlaces a los apartados.
 
 sect('1 Introducción y justificación','s01')
 P('EJE del Golfo es el contexto de un proyecto académico de transporte. Para esta actividad desarrollamos una copia independiente del sistema y añadimos una bitácora PWA destinada al personal de taller y operaciones. El problema atendido es la interrupción del registro y la consulta de incidencias cuando una unidad o una persona se encuentra sin acceso a internet. La solución conserva la interfaz y los reportes en el navegador, permitiendo continuar el trabajo localmente.')
@@ -123,7 +124,7 @@ code("""const page = window.location.hash.slice(1) || 'inicio';
 P('app.css aplica CSS Grid y Flexbox. En pantallas de hasta 700 px, la barra lateral deja de ser fija y la navegación se vuelve horizontal; el formulario pasa a una columna. Se incorporan etiquetas de campos, enlace para saltar al contenido, foco visible y mensajes con role="status". La prueba de ancho móvil comprueba que la página no exceda el viewport de 390 px.')
 
 sect('5 Manifiesto e instalabilidad','s05')
-P('El manifiesto describe la identidad y la forma de apertura de la aplicación. Se enlaza desde index.html mediante rel="manifest". Los valores relativos mantienen la instalación dentro de la ruta del proyecto tanto en localhost como en GitHub Pages (MDN Web Docs, s. f.-d).')
+P('El manifiesto describe la identidad y la forma de apertura de la aplicación. Se enlaza desde index.html mediante rel="manifest". Los valores relativos mantienen la instalación dentro de la ruta del proyecto tanto en localhost como en GitHub Pages (MDN Web Docs, s. f.-f).')
 code(json.dumps({key:M[key] for key in ['id','name','short_name','start_url','scope','display','background_color','theme_color']},ensure_ascii=False,indent=2))
 tbl(['Parámetro','Configuración y propósito'],[['id, start_url y scope','./ identifica y delimita la aplicación al directorio publicado.'],['display','standalone solicita apertura sin la interfaz habitual de pestañas.'],['lang y dir','es-MX y ltr expresan idioma y dirección del contenido.'],['background_color y theme_color','#f5f7f6 y #073d32 definen fondo inicial y color de integración.'],['Iconos','PNG 192x192 y 512x512 con purpose any; PNG 512x512 con purpose maskable.'],['shortcuts','Acceso directo a Nueva incidencia mediante ./#reportar.']],[.36,.64])
 P('beforeinstallprompt se conserva para invocarlo al pulsar Instalar app; si no está disponible, se muestran instrucciones del menú del navegador. appinstalled oculta el botón. Los metadatos e iconos permiten que sistemas compatibles generen la pantalla de inicio nativa. La revisión del manifiesto no demuestra que la instalación o la splash hayan sido probadas físicamente en cada plataforma.')
@@ -142,7 +143,7 @@ code("""self.addEventListener('install', event => {
   })());
 });""")
 P('En activate se eliminan únicamente las cachés cuyo nombre comienza con eje-bitacora-actividad- y no corresponde a las versiones vigentes. clients.claim() permite controlar clientes existentes después de la activación. La limpieza está acotada para no borrar cachés de aplicaciones ajenas en el mismo origen.')
-P('No se ejecuta skipWaiting de forma forzada. Una versión nueva espera a que se cierren las ventanas de la anterior, evitando reemplazar el shell durante la edición de un formulario. Para publicar cambios en recursos precargados debe incrementarse VERSION. Esta política se apoya en el ciclo documentado de Service Workers y se concreta en sw.js (MDN Web Docs, s. f.-c).')
+P('No se ejecuta skipWaiting de forma forzada. Una versión nueva espera a que se cierren las ventanas de la anterior, evitando reemplazar el shell durante la edición de un formulario. Para publicar cambios en recursos precargados debe incrementarse VERSION. Esta política se apoya en el ciclo documentado de Service Workers y se concreta en sw.js (MDN Web Docs, s. f.-e).')
 
 sect('7 Estrategias de caché y flujo offline','s07')
 tbl(['Recurso','Estrategia','Justificación'],[['HTML del shell','Cache First para navegación dentro del ámbito.','Permite volver a abrir las vistas CSR sin depender de una respuesta de red.'],['CSS, JS, manifiesto e iconos','Cache First sobre lista explícita.','Los recursos cambian con una versión del shell y deben estar disponibles juntos.'],['catalogo.json','Stale While Revalidate.','Responde con la copia existente y consulta actualizaciones en segundo plano.'],['Incidencias y fotografías','IndexedDB; no se guardan como respuestas HTTP.','Son datos estructurados y archivos del usuario, independientes de la caché de recursos.'],['Páginas privadas de Laravel','Fuera del ámbito.','Evita precargar sesiones o paneles del sistema de origen.']],[.26,.31,.43])
@@ -180,7 +181,7 @@ P('Al reiniciar, la aplicación abre la base y reconstruye la vista desde los ob
 P('La exportación produce JSON y convierte cada Blob a data URL mediante FileReader. Los registros pueden conservarse fuera del navegador, aunque no existe una función de importación. Las URL temporales de imágenes se revocan al cambiar de vista para liberar memoria. Borrar los datos del sitio o usar un perfil distinto impide recuperar automáticamente la bitácora anterior.')
 
 sect('10 Integración de la cámara','s10')
-P('La cámara se solicita al pulsar Abrir cámara. Se comprueba la existencia de navigator.mediaDevices.getUserMedia y se pide exclusivamente video, con facingMode ideal environment para preferir la cámara trasera. Este valor expresa una preferencia, no una garantía sobre el dispositivo elegido. El permiso requiere un contexto seguro y autorización del navegador (MDN Web Docs, s. f.-e).')
+P('La cámara se solicita al pulsar Abrir cámara. Se comprueba la existencia de navigator.mediaDevices.getUserMedia y se pide exclusivamente video, con facingMode ideal environment para preferir la cámara trasera. Este valor expresa una preferencia, no una garantía sobre el dispositivo elegido. El permiso requiere un contexto seguro y autorización del navegador (MDN Web Docs, s. f.-c).')
 code("""const nextStream = await navigator.mediaDevices.getUserMedia({
   video: {facingMode: {ideal: 'environment'}},
   audio: false
@@ -208,7 +209,7 @@ code("""navigator.geolocation.getCurrentPosition(
 );""")
 tbl(['Opción o permiso','Tratamiento'],[['enableHighAccuracy','Solicita mayor precisión; puede incrementar el tiempo o consumo del dispositivo.'],['timeout 15000','Limita la espera de la solicitud de posición a 15 segundos.'],['maximumAge 60000','Permite aceptar una posición disponible de hasta un minuto de antigüedad.'],['Permiso denegado','Se comunica el resultado y se mantiene habilitado el guardado.'],['Solicitud finalizada en otra vista','renderId evita actualizar controles de una pantalla que ya fue abandonada.']],[.36,.64])
 h2('Notificación de guardado opcional')
-P('En Aplicación se ofrece Notification.requestPermission. Si existe permiso granted y un Service Worker activo, showNotification confirma un guardado local. No se implementaron Push API, suscripciones ni servidor de mensajería. Una notificación local no demuestra recepción de mensajes desde la empresa (MDN Web Docs, s. f.-f).')
+P('En Aplicación se ofrece Notification.requestPermission. Si existe permiso granted y un Service Worker activo, showNotification confirma un guardado local. No se implementaron Push API, suscripciones ni servidor de mensajería. Una notificación local no demuestra recepción de mensajes desde la empresa (MDN Web Docs, s. f.-d).')
 P('Cámara y ubicación se activan por botones separados y no se solicitan al abrir el sitio. Los registros no se transmiten automáticamente. La precisión depende del dispositivo y del entorno: disponer de la API no garantiza que se pueda obtener una posición nueva sin cobertura.')
 
 sect('12 Configuración versionamiento y despliegue','s12')
@@ -228,7 +229,7 @@ h2('Correcciones documentadas')
 P('Durante la preparación se añadió inicio explícito del video y liberación de pistas ante errores. El servidor de CI no pudo utilizar cámara física, por lo que se suministró un flujo sintético. También se corrigió la prueba que recargaba antes de confirmar el guardado y se evitó instalar fuentes opcionales que retrasaban el runner. Estos cambios se registraron en commits reales.')
 
 sect('14 Evidencia de operación offline','s14')
-pic('03-offline-escritorio.png','Figura 6. Consulta después de deshabilitar la red y recargar el sitio publicado. El reporte mostrado es ficticio y el indicador confirma modo local.',320)
+pic('03-offline-escritorio.png','Figura 6. Consulta después de deshabilitar la red y recargar el sitio publicado. El reporte mostrado es ficticio y el indicador confirma modo local.',280)
 P('El procedimiento de evidencia abrió el sitio HTTPS, esperó la activación del Service Worker, completó un reporte académico y confirmó su aparición. Después ejecutó context.setOffline(true), recargó y comprobó nuevamente el mismo título. La captura corresponde al estado posterior a esa recarga, por lo que no depende únicamente de una vista que permaneciera abierta en memoria.')
 tbl(['Dato observado','Valor registrado'],[['Conectividad del contexto',str(S['online']).lower()],['Contexto seguro',str(S['secureContext']).lower()],['Estado del trabajador',S['worker']['state']],['Almacenes locales',', '.join(S['stores'])],['Registros recuperados',str(len(S['incidencias']))],['Momento de evidencia UTC',S['capturedAt']]],[.42,.58])
 P('Cache Storage conserva el shell y el catálogo, mientras IndexedDB conserva el reporte. Son mecanismos distintos: borrar uno de ellos puede afectar una parte diferente de la experiencia. La evidencia se limita a la persistencia de este origen en el perfil de prueba; no demuestra transferencia de datos entre equipos.')
@@ -251,9 +252,14 @@ tbl(['Métrica','Resultado','Interpretación'],[[{'first-contentful-paint':'FCP'
 lcp=L['metrics']['largest-contentful-paint']['value']/1000;cls=L['metrics']['cumulative-layout-shift']['value']
 P(f'El LCP obtenido fue de {lcp:.2f} s y el CLS de {cls:.3f}. Como referencia de experiencia web, Google propone LCP de hasta 2.5 s y CLS de hasta 0.1. En esta ejecución, el LCP '+('se ubicó dentro' if lcp<=2.5 else 'quedó fuera')+' de esa referencia y el CLS '+('se mantuvo dentro' if cls<=.1 else 'quedó fuera')+'. Estos valores no permiten afirmar cumplimiento de Core Web Vitals en campo: faltan datos de usuarios, percentiles e INP (Walton, 2024).')
 findings=L.get('findings',[])
+actions={'cumulative-layout-shift':'Reservar espacio para el contenido inicial y comparar la traza antes y después de cada render del contenedor #view.', 'layout-shifts':'Examinar los dos desplazamientos registrados y estabilizar las dimensiones de sus contenedores.', 'color-contrast':'Aumentar la diferencia de luminancia del texto y su fondo en los elementos señalados; validar cada combinación.', 'cache-insight':'Revisar cabeceras HTTP del hosting. La caché del Service Worker y la vida útil HTTP son mecanismos diferentes.', 'cls-culprits-insight':'Relacionar los cambios de geometría con la reconstrucción de la vista; confirmar la causa con la traza antes de modificar el diseño.'}
 if findings:
-    tbl(['Hallazgo del informe','Acción propuesta'],[[escape(f['title'])+((' ('+escape(str(f.get('display')))+')') if f.get('display') else ''),'Revisar el detalle del JSON original, localizar los recursos o elementos afectados y repetir la medición tras el ajuste.'] for f in findings[:5]],[.55,.45])
+    tbl(['Hallazgo del informe','Acción propuesta'],[[escape(f['title'])+((' ('+escape(str(f.get('display')))+')') if f.get('display') else ''),actions.get(f['id'],'Revisar los recursos señalados y repetir una medición comparable tras el ajuste.')] for f in findings[:5]],[.55,.45])
 else:P('El resumen no registró auditorías con score inferior a 1. Esto no sustituye las revisiones manuales de accesibilidad ni una evaluación de seguridad independiente.')
+nodes=FULL.get('audits',{}).get('color-contrast',{}).get('details',{}).get('items',[])
+selectors=[item.get('node',{}).get('selector','') for item in nodes if item.get('node',{}).get('selector')]
+if selectors:P('Los elementos concretos señalados por contraste incluyen: <b>'+escape('; '.join(selectors[:3]))+'</b>. La revisión debe concentrarse en esos selectores y volver a ejecutar el análisis después del cambio.')
+P('Como hipótesis de mejora para CLS, conviene revisar la doble reconstrucción inicial de la vista al cargar el catálogo. El código permite esa secuencia, pero esta auditoría no demuestra por sí sola que sea la causa de los dos desplazamientos; debe confirmarse con la traza de rendimiento.')
 P('La puntuación de rendimiento agrega métricas; los diagnósticos orientan mejoras, pero no deben confundirse con los componentes directos de la puntuación. La página inicial usa recursos pequeños y no incorpora bibliotecas visuales externas; esa decisión reduce dependencias, aunque no elimina la necesidad de revisar contraste, navegación por teclado, prioridades de carga y políticas del hosting (Chrome for Developers, s. f.).')
 
 sect('18 Seguridad límites y mejoras previstas','s18')
@@ -276,11 +282,12 @@ refs=[
 ('GoogleChrome. (2024, 22 de abril). <i>Release v12.0.0.</i> GitHub.','https://github.com/GoogleChrome/lighthouse/releases/tag/v12.0.0'),
 ('MDN Web Docs. (s. f.-a). <i>Geolocation: getCurrentPosition() method.</i>','https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition'),
 ('MDN Web Docs. (s. f.-b). <i>IndexedDB API.</i>','https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API'),
-('MDN Web Docs. (s. f.-c). <i>Service Worker API.</i>','https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API'),
-('MDN Web Docs. (s. f.-d). <i>Web application manifest.</i>','https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest'),
-('MDN Web Docs. (s. f.-e). <i>MediaDevices: getUserMedia() method.</i>','https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia'),
-('MDN Web Docs. (s. f.-f). <i>Notifications API.</i>','https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API'),
+('MDN Web Docs. (s. f.-e). <i>Service Worker API.</i>','https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API'),
+('MDN Web Docs. (s. f.-f). <i>Web application manifest.</i>','https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest'),
+('MDN Web Docs. (s. f.-c). <i>MediaDevices: getUserMedia() method.</i>','https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia'),
+('MDN Web Docs. (s. f.-d). <i>Notifications API.</i>','https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API'),
 ('Walton, P. (2024, 31 de octubre). <i>Web Vitals.</i> web.dev.','https://web.dev/articles/vitals')]
+refs.sort(key=lambda item:item[0])
 for name,url in refs: story.append(Paragraph(name+'<br/><link href="'+url+'" color="#075d43">'+url+'</link>',styles['RefReport']))
 story.append(Paragraph('Fuentes técnicas consultadas el 27 de noviembre de 2026. El código, las capturas y las métricas de esta entrega constituyen evidencia propia del proyecto; las referencias sustentan los conceptos y las recomendaciones técnicas.',styles['CaptionReport']))
 
