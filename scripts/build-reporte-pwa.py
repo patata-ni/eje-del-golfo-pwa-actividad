@@ -12,7 +12,10 @@ from reportlab.graphics.shapes import Drawing, Rect, String, Line, Polygon
 import fitz
 from PIL import Image as PILImage, ImageOps, ImageDraw
 
-OUT=Path('reporte-final');OUT.mkdir(exist_ok=True)
+OUT=Path('reporte-final')
+assert OUT.resolve().parent==Path.cwd().resolve()
+if OUT.exists(): shutil.rmtree(OUT)
+OUT.mkdir()
 E=next(Path('insumos').rglob('resumen-lighthouse.json')).parent
 L=json.loads((E/'resumen-lighthouse.json').read_text())
 FULL=json.loads((E/'lighthouse.report.json').read_text())
@@ -254,13 +257,13 @@ P(f'El LCP obtenido fue de {lcp:.2f} s y el CLS de {cls:.3f}. Como referencia de
 findings=L.get('findings',[])
 actions={'cumulative-layout-shift':'Reservar espacio para el contenido inicial y comparar la traza antes y después de cada render del contenedor #view.', 'layout-shifts':'Examinar los dos desplazamientos registrados y estabilizar las dimensiones de sus contenedores.', 'color-contrast':'Aumentar la diferencia de luminancia del texto y su fondo en los elementos señalados; validar cada combinación.', 'cache-insight':'Revisar cabeceras HTTP del hosting. La caché del Service Worker y la vida útil HTTP son mecanismos diferentes.', 'cls-culprits-insight':'Relacionar los cambios de geometría con la reconstrucción de la vista; confirmar la causa con la traza antes de modificar el diseño.'}
 if findings:
-    tbl(['Hallazgo del informe','Acción propuesta'],[[escape(f['title'])+((' ('+escape(str(f.get('display')))+')') if f.get('display') else ''),actions.get(f['id'],'Revisar los recursos señalados y repetir una medición comparable tras el ajuste.')] for f in findings[:5]],[.55,.45])
+    tbl(['Hallazgo del informe','Acción propuesta'],[[escape(f['title'])+((' ('+escape(str(f.get('display')))+')') if f.get('display') else ''),actions.get(f['id'],'Revisar los recursos señalados y repetir una medición comparable tras el ajuste.')] for f in findings[:4]],[.55,.45])
 else:P('El resumen no registró auditorías con score inferior a 1. Esto no sustituye las revisiones manuales de accesibilidad ni una evaluación de seguridad independiente.')
 nodes=FULL.get('audits',{}).get('color-contrast',{}).get('details',{}).get('items',[])
 selectors=[item.get('node',{}).get('selector','') for item in nodes if item.get('node',{}).get('selector')]
 if selectors:P('Los elementos concretos señalados por contraste incluyen: <b>'+escape('; '.join(selectors[:3]))+'</b>. La revisión debe concentrarse en esos selectores y volver a ejecutar el análisis después del cambio.')
 P('Como hipótesis de mejora para CLS, conviene revisar la doble reconstrucción inicial de la vista al cargar el catálogo. El código permite esa secuencia, pero esta auditoría no demuestra por sí sola que sea la causa de los dos desplazamientos; debe confirmarse con la traza de rendimiento.')
-P('La puntuación de rendimiento agrega métricas; los diagnósticos orientan mejoras, pero no deben confundirse con los componentes directos de la puntuación. La página inicial usa recursos pequeños y no incorpora bibliotecas visuales externas; esa decisión reduce dependencias, aunque no elimina la necesidad de revisar contraste, navegación por teclado, prioridades de carga y políticas del hosting (Chrome for Developers, s. f.).')
+P('La puntuación agrega métricas y puede variar entre ejecuciones. Las acciones propuestas deben verificarse con mediciones comparables y pruebas funcionales, no con una cifra aislada (Chrome for Developers, s. f.).')
 
 sect('18 Seguridad límites y mejoras previstas','s18')
 P('La PWA conserva fotografías y coordenadas, por lo que el almacenamiento local debe tratarse como información de trabajo. Se evita solicitar permisos al iniciar, se utiliza HTTPS y se escapa el texto al generar HTML. La prueba con una cadena que contiene una etiqueta img confirma que se muestra como texto en lugar de crear ese elemento. Este caso no equivale a una auditoría exhaustiva de XSS.')
