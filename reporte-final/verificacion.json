@@ -1,7 +1,7 @@
 {
-  "pages": 24,
-  "sha256": "fc588cee17f8ab39236a74edcbcd4e0482e1bece44fa4a372e44bd9708b11778",
-  "bytes": 481021,
+  "pages": 23,
+  "sha256": "f69168d9f54ae267a0a6a9ce7f1b9105d835d7b39f94a000ed7aeca72a2f3f0e",
+  "bytes": 479968,
   "sections": [
     [
       "1 Introducción y justificación",
@@ -181,31 +181,26 @@
     },
     {
       "page": 19,
-      "chars": 2551,
+      "chars": 2413,
       "title": "UTGZ  |  Desarrollo y Gestión de Software"
     },
     {
       "page": 20,
-      "chars": 339,
-      "title": "UTGZ  |  Desarrollo y Gestión de Software"
-    },
-    {
-      "page": 21,
       "chars": 1999,
       "title": "UTGZ  |  Desarrollo y Gestión de Software"
     },
     {
-      "page": 22,
+      "page": 21,
       "chars": 2208,
       "title": "UTGZ  |  Desarrollo y Gestión de Software"
     },
     {
-      "page": 23,
+      "page": 22,
       "chars": 1575,
       "title": "UTGZ  |  Desarrollo y Gestión de Software"
     },
     {
-      "page": 24,
+      "page": 23,
       "chars": 1716,
       "title": "UTGZ  |  Desarrollo y Gestión de Software"
     }
