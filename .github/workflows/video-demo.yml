@@ -22,9 +22,15 @@ jobs:
       - name: Convertir y verificar video MP4
         run: python scripts/convertir-demo.py
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: Video_Funcionalidad_PWA_Eje_del_Golfo
           path: video-final
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: captura-original-demostracion
+          path: video-trabajo
       - name: Conservar evidencia y revision
         run: |
           git config user.name "Tania Gonzalez"
