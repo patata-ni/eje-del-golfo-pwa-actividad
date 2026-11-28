@@ -1,0 +1,161 @@
+{
+  "url": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/",
+  "recordedAt": "2026-11-28T02:26:30.596Z",
+  "duration": 152.042,
+  "automation": true,
+  "hardwareSimulation": false,
+  "observations": [
+    {
+      "event": "network_disabled",
+      "time": 49.071,
+      "online": false
+    }
+  ],
+  "state": {
+    "url": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/#incidencias",
+    "secure": true,
+    "workerState": "activated",
+    "scope": "https://patata-ni.github.io/eje-del-golfo-pwa-actividad/",
+    "caches": [
+      "eje-bitacora-actividad-shell-v1",
+      "eje-bitacora-actividad-datos-v1"
+    ],
+    "stores": [
+      "catalogos",
+      "incidencias"
+    ],
+    "incidencias": [
+      {
+        "id": "bba8b53b-ced8-496b-8f11-1996f78db1ad",
+        "titulo": "Falla en luces delanteras",
+        "descripcion": "La luz delantera izquierda no enciende. Se solicita revisión antes de la próxima salida. Registro ficticio para esta demostración.",
+        "unidad": "Unidad de práctica 01",
+        "prioridad": "Alta",
+        "estado": "Pendiente",
+        "creada": "2026-11-28T02:24:35.915Z",
+        "ubicacion": null,
+        "foto": {
+          "size": 131345,
+          "type": "image/jpeg"
+        }
+      },
+      {
+        "id": "c9ff3d85-fd14-4a26-bc33-ba80a7b097c7",
+        "titulo": "Revisión de frenos sin conexión",
+        "descripcion": "Se registra una revisión preventiva sin internet. La información debe permanecer después de recargar.",
+        "unidad": "Unidad de práctica 01",
+        "prioridad": "Normal",
+        "estado": "Atendida",
+        "creada": "2026-11-28T02:25:12.880Z",
+        "ubicacion": null,
+        "actualizada": "2026-11-28T02:25:23.728Z",
+        "foto": null
+      }
+    ],
+    "online": true
+  },
+  "exportedRecords": 2,
+  "pageErrors": [],
+  "scenes": [
+    {
+      "time": 1.01,
+      "title": "EJE DEL GOLFO · DEMOSTRACIÓN FUNCIONAL",
+      "text": "Grabación automatizada de un navegador real sobre la URL pública HTTPS. Datos de demostración."
+    },
+    {
+      "time": 7.513,
+      "title": "ALCANCE DE ESTA GRABACIÓN",
+      "text": "Se muestran operaciones reales online y offline. No acredita instalación nativa ni cámara o GPS físicos."
+    },
+    {
+      "time": 15.351,
+      "title": "1 · REGISTRAR UNA INCIDENCIA",
+      "text": "El formulario permite seleccionar unidad, prioridad y descripción de la falla."
+    },
+    {
+      "time": 27.6,
+      "title": "EVIDENCIA FOTOGRÁFICA DESDE ARCHIVO",
+      "text": "Se adjunta una imagen de referencia del proyecto. Esta acción no simula una captura de cámara."
+    },
+    {
+      "time": 38.066,
+      "title": "GUARDADO CONFIRMADO",
+      "text": "La incidencia y la imagen quedaron almacenadas en IndexedDB. No se enviaron a un servidor."
+    },
+    {
+      "time": 44.567,
+      "title": "2 · DESCONECTAR LA RED DEL NAVEGADOR",
+      "text": "Ahora se bloquearán las solicitudes de red de este contexto y después se recargará la aplicación."
+    },
+    {
+      "time": 49.072,
+      "title": "RED DESCONECTADA",
+      "text": "El indicador de la aplicación cambia a Sin conexión · modo local."
+    },
+    {
+      "time": 53.626,
+      "title": "RECARGA COMPLETA SIN INTERNET",
+      "text": "La aplicación volvió a cargar y recuperó la incidencia con su imagen. La vista no depende de una página que quedó abierta."
+    },
+    {
+      "time": 62.464,
+      "title": "3 · CREAR UN REPORTE SIN CONEXIÓN",
+      "text": "Se comprueba escritura de datos locales mientras la red sigue bloqueada."
+    },
+    {
+      "time": 75.031,
+      "title": "SEGUNDO REPORTE GUARDADO OFFLINE",
+      "text": "Ambas incidencias están disponibles en este navegador."
+    },
+    {
+      "time": 80.033,
+      "title": "4 · ACTUALIZAR EL ESTADO",
+      "text": "El nuevo reporte se marcará como atendido sin reconectar la red."
+    },
+    {
+      "time": 85.902,
+      "title": "EL ESTADO PERSISTE TRAS RECARGAR",
+      "text": "IndexedDB conserva el cambio. La incidencia continúa como Atendida después de reiniciar la vista."
+    },
+    {
+      "time": 92.404,
+      "title": "5 · BUSCAR Y FILTRAR DATOS LOCALES",
+      "text": "La búsqueda y los filtros también funcionan sin internet."
+    },
+    {
+      "time": 106.544,
+      "title": "6 · CATÁLOGO DISPONIBLE SIN RED",
+      "text": "Se recuperan las rutas académicas guardadas. No son horarios ni disponibilidad comercial en tiempo real."
+    },
+    {
+      "time": 113.049,
+      "title": "7 · RESTABLECER LA CONEXIÓN",
+      "text": "Se habilitará nuevamente la red; los reportes siguen siendo datos locales."
+    },
+    {
+      "time": 119.877,
+      "title": "EXPORTAR LA BITÁCORA",
+      "text": "La exportación incluye los reportes y sus fotografías. Se generará un archivo JSON real."
+    },
+    {
+      "time": 125.695,
+      "title": "EXPORTACIÓN VERIFICADA",
+      "text": "Se generó el JSON con dos incidencias y una imagen adjunta."
+    },
+    {
+      "time": 132.029,
+      "title": "RESULTADO DE LA DEMOSTRACIÓN",
+      "text": "2 incidencias reales en IndexedDB: 1 pendiente y 1 atendida. Lectura, escritura y recarga offline comprobadas."
+    },
+    {
+      "time": 139.533,
+      "title": "LÍMITES DE LA EVIDENCIA",
+      "text": "Cámara, GPS e instalación nativa no se simularon. Esos puntos requieren una grabación física desde el dispositivo."
+    },
+    {
+      "time": 146.538,
+      "title": "EJE DEL GOLFO · FIN DE LA DEMOSTRACIÓN",
+      "text": "Grabación de funcionamiento real en navegador, ejecutada automáticamente. Sin voz ni cámara personal."
+    }
+  ]
+}

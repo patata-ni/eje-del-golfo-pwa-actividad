@@ -1,0 +1,23 @@
+{
+  "file": "Video_Funcionalidad_PWA_Eje_del_Golfo.mp4",
+  "bytes": 1683334,
+  "sha256": "dbc75730cad25e10906e71e32f5ae72590fe82eeaf31b959525289e6cfef5a28",
+  "durationSeconds": 152.042,
+  "resolution": "1280x960",
+  "audio": false,
+  "realBrowser": true,
+  "automated": true,
+  "nativeInstallRecorded": false,
+  "physicalCameraGPSRecorded": false,
+  "runtimeErrors": [],
+  "checks": [
+    "Create incident and attach real image file",
+    "Disable context network and reload",
+    "Recover incident and photo offline",
+    "Create second incident offline",
+    "Update state and reload offline",
+    "Search and filter offline",
+    "Read cached catalog offline",
+    "Restore connectivity and export two incidents"
+  ]
+}
